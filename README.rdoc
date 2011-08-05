@@ -1,0 +1,21 @@
+= Basics
+
+I firmly believe that you don't fully understand a data structure or algorithm until you have implemented it yourself. This project exists so that I may implement and gain a better understanding of some basic data structures that were not covered during my time at university.
+
+These projects are being developed in a number of languages in order to 
+both improve both my understanding of the algorithm in question but also to
+exercise myself in multiple languages.
+
+== Other
+
+These projects have been open sourced so that they can be used in my
+portfolio, to help give others a starting place in learning these data 
+structures, and so that others may help me improve my understanding of these
+data structures by pointing out errors and inefficiencies in my code.
+
+You are perfectly welcome to use these data structures in your own projects,
+but you would likely be better off just using the equivalent data structures
+in the standard library.
+
+Copyright (c) 2011 {Richard Easterling}[https://github.com/kzmn], released
+under the MIT license. 
