@@ -21,10 +21,14 @@ chance of worst-case behavior significantly.
 -}
 
 module Quicksort
-(quicksort)where
+(quicksort)where -- Export only quicksort function, others should be private.
 
 import Data.List
     
+{- |
+This quicksort function recursively sorts the given list using a median
+of three pivot selection process.
+-}
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort [x] = [x]
@@ -34,6 +38,12 @@ quicksort (x:xs) =
 		bigger 	= quicksort (filter (> pivot) xs)
 	in	smaller ++ [pivot] ++ bigger
 
+{- |
+The findPivot function determines the pivot of the given list.  If the list
+has one or two elements, the pivot is simply the first elemnet, otherwise,
+this function sends the first, last, and middle elements of the list to the
+medianOfThree function.
+-}
 findPivot :: (Ord a) => [a] -> a
 findPivot [x] = x
 findPivot [x,y] = x
@@ -44,6 +54,11 @@ findPivot (x:xs) =
 	    median = findMedianOfThree firstElm lastElm middleElm
 	in	median
 
+{- |
+The findMedianOfThree function takes three Ord typed elements, puts them
+in a list, sorts the list, and finally selects the median element from the
+sorted list.
+-}
 findMedianOfThree :: (Ord a) => a -> a -> a -> a
 findMedianOfThree a b c =
 	let list = [a,b,c]
