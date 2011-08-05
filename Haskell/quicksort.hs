@@ -52,7 +52,7 @@ findPivot (x:xs) =
 	    lastElm = last xs
 	    middleElm = (x:xs) !! (quot (length (x:xs))  2)
 	    median = findMedianOfThree firstElm lastElm middleElm
-	in	median
+	in  median
 
 {- |
 The findMedianOfThree function takes three Ord typed elements, puts them
@@ -64,4 +64,4 @@ findMedianOfThree a b c =
 	let list = [a,b,c]
 	    sorted = sort list
 	    median = sorted !! 1
-	in	median
+	in  median
