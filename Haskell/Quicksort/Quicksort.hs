@@ -21,7 +21,8 @@ chance of worst-case behavior significantly.
 -}
 
 module Quicksort
-(quicksort)where -- Export only quicksort function, others should be private.
+(quicksort,
+findPivot)where 
 
 import Data.List
     
