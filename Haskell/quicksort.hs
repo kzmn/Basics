@@ -37,11 +37,13 @@ of three pivot selection process.
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort [x] = [x]
-quicksort (x:xs) =
-	let	pivot = findPivot (x:xs)
-	 	smaller = quicksort (filter (<= pivot) xs)
-		bigger 	= quicksort (filter (> pivot) xs)
-	in	smaller ++ [pivot] ++ bigger
+quicksort (list) =
+    do
+        let	pivot = findPivot list
+        let newList = delete pivot list -- Prevent duplication of pivot.
+        let smaller = quicksort (filter (<= pivot) newList)
+        let bigger 	= quicksort (filter (> pivot) newList)
+        smaller ++ [pivot] ++ bigger
 
 {- |
 The findPivot function determines the pivot of the given list.  If the list
