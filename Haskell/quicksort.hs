@@ -6,13 +6,8 @@ Copyright       : (c) Copyright 2011 Richard Easterling. All Rights Reserved.
 License         : Released under the MIT license
 
 Maintainer      : thegreatkzmn@gmail.com
-Stability       : unstable
+Stability       : stable
 Portability     : portable
-
-*** Bug *** 
-There is currently a repetition of the pivot in the final sorted list,
-will look at again tomorrow.
-*** Bug ***
 
 Quicksort is a simple recursive sorting algorithm with O(nlog n) average time
 and O(n^2) worst-case time.
