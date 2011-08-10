@@ -51,10 +51,10 @@ findPivot :: (Ord a) => [a] -> a
 findPivot [x] = x
 findPivot [x,y] = x
 findPivot (x:xs) =
-	let firstElm = x
-	    lastElm = last xs
-	    middleElm = (x:xs) !! (quot (length (x:xs))  2)
-	    median = findMedianOfThree firstElm lastElm middleElm
+	let firstElm    = x
+	    lastElm     = last xs
+	    middleElm   = (x:xs) !! (quot (length (x:xs))  2)
+	    median      = findMedianOfThree firstElm lastElm middleElm
 	in  median
 
 {- |
@@ -64,7 +64,7 @@ sorted list.
 -}
 findMedianOfThree :: (Ord a) => a -> a -> a -> a
 findMedianOfThree a b c =
-	let list = [a,b,c]
-	    sorted = sort list
-	    median = sorted !! 1
+	let list    = [a,b,c]
+	    sorted  = sort list
+	    median  = sorted !! 1
 	in  median
