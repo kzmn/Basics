@@ -35,10 +35,10 @@ quicksort [] = []
 quicksort [x] = [x]
 quicksort (list) =
     do
-        let	pivot = findPivot list
+        let pivot   = findPivot list
         let newList = delete pivot list -- Prevent duplication of pivot.
         let smaller = quicksort (filter (<= pivot) newList)
-        let bigger 	= quicksort (filter (> pivot) newList)
+        let bigger  = quicksort (filter (> pivot) newList)
         smaller ++ [pivot] ++ bigger
 
 {- |
