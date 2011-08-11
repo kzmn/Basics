@@ -51,7 +51,7 @@ data HuffTree   = EmptyTree
 Function: getWeight
 This function simply returns the weight of the given tree.
 -}             
-getWeight :: HuffTree a -> Int
+getWeight :: HuffTree -> Int
 getWeight EmptyTree = 0
 getWeight (Leaf weight char) = weight
 getWeight (Node weight leftChild rightChild) = weight
