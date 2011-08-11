@@ -33,6 +33,10 @@ This type represents a huffman code, which is simply a list of bits.
 -}
 type HuffCode   = [Bit]
 
+{- Type: HuffTable
+This type represents a list of tuples containing Huffman Codes and their
+corresponding character.
+-}
 type HuffTable  = [(Char, HuffCode)]
 
 {- |
@@ -55,4 +59,14 @@ getWeight :: HuffTree -> Int
 getWeight EmptyTree = 0
 getWeight (Leaf weight char) = weight
 getWeight (Node weight leftChild rightChild) = weight
+
+{- |
+Function CombineTree
+This function combines two subtrees to make a new node.
+-}
+combineTree :: HuffTree -> HuffTree -> HuffTree
+combineTree leftChild rightChild = Node weight leftChild rightChild where
+    weight = ((getWeight leftChild) + (getWeight rightChild))
+                                    
+
 
