@@ -18,6 +18,8 @@ HuffTree,
 getWeight)
 where
     
+import Data.List(sort)
+    
 {- |
 Type: Bit
 The Bit type is used to represent the bits that will be used in the encoding
@@ -46,27 +48,57 @@ algorithm.  A tree can be an EmptyTree which is simply nothing, a Leaf
 which has an integer weight and a character from the alphabet that is being
 encoded, and finally a node that has an integer weight and two sub trees.
 -}
-data HuffTree   = EmptyTree
-                | Leaf Int Char
-                | Node Int HuffTree HuffTree
+data HuffTree a = EmptyTree
+                | Leaf{weight :: Int,
+                       character :: Char}
+                | Node {weight :: Int,
+                        leftChild :: HuffTree a,
+                        rightChild :: HuffTree a}
                 deriving(Show, Read)
    
 {- |
 Function: getWeight
 This function simply returns the weight of the given tree.
 -}             
-getWeight :: HuffTree -> Int
+getWeight :: HuffTree a -> Int
 getWeight EmptyTree = 0
 getWeight (Leaf weight char) = weight
 getWeight (Node weight leftChild rightChild) = weight
 
 {- |
-Function CombineTree
+Function: makeNode
 This function combines two subtrees to make a new node.
 -}
-combineTree :: HuffTree -> HuffTree -> HuffTree
-combineTree leftChild rightChild = Node weight leftChild rightChild where
+makeNode :: HuffTree a -> HuffTree a -> HuffTree a
+makeNode leftChild rightChild = Node weight leftChild rightChild where
     weight = ((getWeight leftChild) + (getWeight rightChild))
+
+{- |
+Function: getRoot
+Given a list of HuffTrees this function will recursively combine these trees
+into Nodes and will return the root Node when finished.
+-}     
+getRoot :: [HuffTree a] -> HuffTree a
+getRoot [] = error "Can not get the root of an empty list."
+getRoot (t0:[]) = makeNode t0 EmptyTree
+getRoot (t0:t1:[]) = makeNode t0 t1
+getRoot (t0:t1:ts) = (getRoot.sort) newList where
+    newList = (makeNode t0 t1):ts
+    
+
+{- |
+An instance of Ord for HuffTrees.  HuffTrees are simply ordered by weight.
+-}   
+instance Ord (HuffTree a) where
+    compare x y = compare (getWeight x) (getWeight y)
+
+{- |
+An instance of Eq for HuffTrees.  HuffTrees are equal if their weights are
+equal.
+-}    
+instance Eq (HuffTree a) where
+    x == y = (getWeight x) == (getWeight y)
+
                                     
 
 
