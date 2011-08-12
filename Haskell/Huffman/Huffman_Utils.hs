@@ -15,10 +15,13 @@ module Huffman_Utils
 HuffCode,
 HuffTable,
 HuffTree,
-getWeight)
+AlphabetEntry,
+Alphabet,
+makeTree)
 where
     
-import Data.List(sort)
+import Data.List(sort, length, group)
+import Control.Arrow
     
 {- |
 Type: Bit
@@ -50,11 +53,24 @@ encoded, and finally a node that has an integer weight and two sub trees.
 -}
 data HuffTree a = EmptyTree
                 | Leaf{weight :: Int,
-                       character :: Char}
+                       character :: a}
                 | Node {weight :: Int,
                         leftChild :: HuffTree a,
                         rightChild :: HuffTree a}
                 deriving(Show, Read)
+
+{- |
+Data Type: AlphabetEntry
+This data type represents an entry in the alphabet that we are going to
+encode.
+-}                
+data AlphabetEntry a = AlphabetEntry [Bit] a deriving (Eq, Show)
+
+{- |
+Type:  Alphabet
+This type represents the alphabet of symbols that we are going to encode.
+-}
+type Alphabet a = [AlphabetEntry a] 
    
 {- |
 Function: getWeight
@@ -74,16 +90,33 @@ makeNode leftChild rightChild = Node weight leftChild rightChild where
     weight = ((getWeight leftChild) + (getWeight rightChild))
 
 {- |
-Function: getRoot
+Function: combineTree
 Given a list of HuffTrees this function will recursively combine these trees
-into Nodes and will return the root Node when finished.
+into Nodes and will return the root Node of the combined tree when finished.
 -}     
-getRoot :: [HuffTree a] -> HuffTree a
-getRoot [] = error "Can not get the root of an empty list."
-getRoot (t0:[]) = makeNode t0 EmptyTree
-getRoot (t0:t1:[]) = makeNode t0 t1
-getRoot (t0:t1:ts) = (getRoot.sort) newList where
+combineTree :: [HuffTree a] -> HuffTree a
+combineTree [] = error "Can not get the root of an empty list."
+combineTree (t0:[]) = makeNode t0 EmptyTree
+combineTree (t0:t1:[]) = makeNode t0 t1
+combineTree (t0:t1:ts) = (combineTree.sort) newList where
     newList = (makeNode t0 t1):ts
+ 
+{- |
+Function: freqCount
+This function counts the number of times that each symbol appears in the
+given list.
+-}   
+freqCount :: Ord a => [a] ->[(Int, a)]
+freqCount = map (length &&& head).group.sort
+
+{- |
+Function: makeTree
+This function builds a HuffTree out of a list of orderable types.
+-}
+makeTree :: Ord a => [a] -> HuffTree a
+makeTree list = newTree where
+    newTree = combineTree treeNodes
+    treeNodes = (map(\(weight,char)-> Leaf weight char).freqCount) list
     
 
 {- |
