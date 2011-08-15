@@ -11,10 +11,9 @@ Portability		:	portable
 
 -}
 module Huffman_Utils
-(Bit,
+(Bit(L,R),
 HuffCode,
-HuffTable,
-HuffTree,
+HuffTree(EmptyTree,Leaf,Node),
 AlphabetEntry,
 Alphabet,
 makeTree)
@@ -53,7 +52,7 @@ encoded, and finally a node that has an integer weight and two sub trees.
 -}
 data HuffTree a = EmptyTree
                 | Leaf{weight :: Int,
-                       symbol :: a}
+                        symbol :: a}
                 | Node {weight :: Int,
                         leftChild :: HuffTree a,
                         rightChild :: HuffTree a}
@@ -116,7 +115,7 @@ This function builds a HuffTree out of a list of orderable types.
 makeTree :: Ord a => [a] -> HuffTree a
 makeTree list = newTree where
     newTree = combineTree treeNodes
-    treeNodes = (map(\(weight, symbol)-> Leaf weight char).freqCount) list
+    treeNodes = (map(\(weight, symbol)-> Leaf weight symbol).freqCount) list
     
 
 {- |

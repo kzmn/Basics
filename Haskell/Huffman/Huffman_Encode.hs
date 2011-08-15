@@ -15,7 +15,7 @@ module Huffman_Encode
 ()
 where
 
-import Huffman_Utils(HuffTree a , Alphabet a, Bit)
+import Huffman_Utils
 
 {- |
 Function: encode
@@ -28,7 +28,7 @@ encode tree = encodeHelper [] tree
 Function: encodeHelper
 This helper function handles most of the logic for the encoding process.
 -}
-encodeHelper :: [Bit] -> HuffTree a, Alphabet a
+encodeHelper :: [Bit] -> HuffTree a -> Alphabet a
 encodeHelper bits EmptyTree = []
 encodeHelper bits (Leaf weight symbol) = [AlphabetEntry bits symbol]
 encodeHelper bits (Node weight leftChild rightChild) =
@@ -45,4 +45,15 @@ findCode :: Eq a => Alphabet a -> a -> [Bit]
 findCode [] _ = []
 findCode ((AlphabetEntry bits symbol):entries) symbolToFind
     | symbol == symbolToFind = bits
-    | otherwise = lookupEncoding entries symbolToFind
+    | otherwise = findCode entries symbolToFind
+    
+{- |
+Function: encodeList
+This function takes a list of Ord types and returns he huffman tree and list
+of Bits.
+-}
+encodeList :: Ord a => [a] -> (HuffTree a, [Bit])
+encodeList list = (tree, bits) where
+    tree = makeTree list
+    encoding = encode tree
+    bits = concat $ map (findCode encoding) list
