@@ -1,11 +1,11 @@
 {- |
 Module			:	Huffman_Types.hs
-Description		:	This file creates basic types for Huffman encoding.
+Description	    :	This file creates basic types for Huffman encoding.
 Copyright		:	(c) Copyright 2011 Richard Easterling. All Rights Reserved. 
 License			:	Released under the MIT license.
 
 Maintainer		:	thegreatkzmn@gmail.com
-Stability		:	unstable
+Stability	    :	unstable
 Portability		:	portable
 
 
@@ -53,7 +53,7 @@ encoded, and finally a node that has an integer weight and two sub trees.
 -}
 data HuffTree a = EmptyTree
                 | Leaf{weight :: Int,
-                       character :: a}
+                       symbol :: a}
                 | Node {weight :: Int,
                         leftChild :: HuffTree a,
                         rightChild :: HuffTree a}
@@ -78,7 +78,7 @@ This function simply returns the weight of the given tree.
 -}             
 getWeight :: HuffTree a -> Int
 getWeight EmptyTree = 0
-getWeight (Leaf weight char) = weight
+getWeight (Leaf weight symbol) = weight
 getWeight (Node weight leftChild rightChild) = weight
 
 {- |
@@ -116,7 +116,7 @@ This function builds a HuffTree out of a list of orderable types.
 makeTree :: Ord a => [a] -> HuffTree a
 makeTree list = newTree where
     newTree = combineTree treeNodes
-    treeNodes = (map(\(weight,char)-> Leaf weight char).freqCount) list
+    treeNodes = (map(\(weight, symbol)-> Leaf weight char).freqCount) list
     
 
 {- |

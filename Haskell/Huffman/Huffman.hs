@@ -12,6 +12,5 @@ Portability		:	portable
 -}
 
 module Huffman
-()
 where
     
