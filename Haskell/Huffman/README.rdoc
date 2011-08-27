@@ -1,0 +1,14 @@
+= Huffman Encoding Project
+
+In this project I will write a simple Huffman Encoding/Decoding program in Haskell.  This program will will be able to encode and decode strings through
+the command line as well as encoding and decoding files.
+
+== Credits
+
+All glory to Josh Myer for his {Haskell Demo}[http://www.joshisanerd.com/projects/Huffman.pdf], and Professor Bernie Pope for his {Huffman Encoding in Haskell}[http://ww2.cs.mu.oz.au/172/harald-pdf/16-4up.pdf] slides which helped
+me get this project in motion.
+
+== Legal
+
+Copyright (c) 2011 {Richard Easterling}[https://github.com/kzmn], released
+under the MIT license.
