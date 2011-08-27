@@ -14,7 +14,7 @@ module Huffman_Utils
 (Bit(L,R),
 HuffCode,
 HuffTree(EmptyTree,Leaf,Node),
-AlphabetEntry,
+AlphabetEntry(AlphabetEntry),
 Alphabet,
 makeTree)
 where
