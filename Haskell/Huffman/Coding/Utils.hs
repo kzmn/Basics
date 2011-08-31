@@ -10,7 +10,7 @@ Portability		:	portable
 
 
 -}
-module Huffman.Coding.Utils
+module Utils
 (Bit(L,R),
 HuffCode,
 HuffTree(EmptyTree,Leaf,Node),

@@ -11,11 +11,11 @@ Portability		:	portable
 
 -}
 
-module Huffman.Coding.Encode
+module Encode
 (encodeList)
 where
 
-import Huffman.Coding.Utils
+import Utils
 
 {- |
 Function: encode
