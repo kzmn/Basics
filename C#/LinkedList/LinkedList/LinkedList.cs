@@ -116,7 +116,7 @@ namespace LinkedList
        private class Node<T>
        {
 
-           public T Data { get; set; }          //The data stored by the Node.
+           public T Data { get; set; }            //The data stored by the Node.
            internal Node<T> Prev { get; set; }    //The previous Node in the list.
            internal Node<T> Next { get; set; }    //The next Node in the list.
 
@@ -158,8 +158,24 @@ namespace LinkedList
            }
        }
 
+       class LinkedListEnumerator:IEnumerator
+       {
+           private Node<T> currentNode;
 
 
-     
+           public object Current
+           {
+               get { throw new NotImplementedException(); }
+           }
 
+           public bool MoveNext()
+           {
+               throw new NotImplementedException();
+           }
+
+           public void Reset()
+           {
+               throw new NotImplementedException();
+           }
+       }
 }
