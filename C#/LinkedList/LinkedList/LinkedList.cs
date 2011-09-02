@@ -16,8 +16,8 @@ namespace LinkedList
    /// <typeparam name="T">Generic Type T</typeparam>
    public class LinkedList<T>:IEnumerable
     {
-       private Node<T> head;
-       private Node<T> tail;
+       internal Node<T> Head{internal get; private set;}
+       internal Node<T> Tail{internal get; private set;}
 
        /// <summary>
        /// Default constructor for the linked list class.  This constructor initializes
@@ -25,10 +25,10 @@ namespace LinkedList
        /// </summary>
        public LinkedList()
        {
-           head = new Node<T>();
-           tail = new Node<T>(default(T), head, head);
-           head.Prev = tail;
-           head.Next = tail;
+           Head = new Node<T>();
+           Tail = new Node<T>(default(T), Head, Head);
+           Head.Prev = Tail;
+           Head.Next = Tail;
 
        }
 
@@ -40,7 +40,7 @@ namespace LinkedList
        /// <returns></returns>
        public Boolean IsEmpty()
        {
-           return head.Next.Equals(tail);
+           return Head.Next.Equals(Tail);
        }
 
        /// <summary>
@@ -52,11 +52,11 @@ namespace LinkedList
        public Node<T> Insert(T dataToInsert)
        {
            
-           Node<T> prev = tail.Prev;
-           Node<T> nodeToInsert = new Node<T>(dataToInsert, prev, tail);
+           Node<T> prev = Tail.Prev;
+           Node<T> nodeToInsert = new Node<T>(dataToInsert, prev, Tail);
 
            prev.Next = nodeToInsert;
-           tail.Prev = nodeToInsert;
+           Tail.Prev = nodeToInsert;
 
            return nodeToInsert;
        }
@@ -69,10 +69,10 @@ namespace LinkedList
        /// <returns></returns>
        public Node<T> InsertFirst(T dataToInsert)
        {
-           Node<T> next = head.Next;
-           Node<T> nodeToInsert = new Node<T>(dataToInsert, head, next);
+           Node<T> next = Head.Next;
+           Node<T> nodeToInsert = new Node<T>(dataToInsert, Head, next);
 
-           head.Next = nodeToInsert;
+           Head.Next = nodeToInsert;
            next.Prev = nodeToInsert;
 
            return nodeToInsert;
@@ -158,24 +158,101 @@ namespace LinkedList
            }
        }
 
-       class LinkedListEnumerator:IEnumerator
+        /// <summary>
+        /// This class creates a simple iterator for the LinkedList class.
+        /// </summary>
+        /// <typeparam name="T">Generic type T.</typeparam>
+       class LinkedListEnumerator<T>:IEnumerator
        {
            private Node<T> currentNode;
+           private LinkedList<T> list;
 
-
+           /// <summary>
+           /// The Current property is simply the Data property of the
+           /// current Node.
+           /// </summary>
            public object Current
            {
-               get { throw new NotImplementedException(); }
+               get{return currentNode.Data;}
            }
 
+           /// <summary>
+           /// Constructor for the LinkedListEnumerator.  This 
+           /// constructor initializes the list and currentNode
+           /// fields using the given linked list.
+           /// </summary>
+           /// <param name="newList">The linked list to iterate over.</param>
+           public LinkedListEnumerator(LinkedList<T> newList)
+           {
+               list = newList;
+               currentNode = list.Head;
+           }
+
+           /// <summary>
+           /// This method iterates to the next object in the list.
+           /// Do to the circular nature of the list, when we reach
+           /// the end of the list, this method iterates back to the
+           /// first element of the list.  As a result, this method
+           /// always returns true.
+           /// </summary>
+           /// <returns>True</returns>
            public bool MoveNext()
            {
-               throw new NotImplementedException();
+               Node<T> nextNode = currentNode.Next;
+
+               /**
+                * If we are at the end of the list, skip over
+                * the head and tail nodes and go straight to
+                * the first node in the list.
+                * */
+               if (nextNode.Equals(list.Tail))
+               {
+                   currentNode = list.Head.Next;
+               }
+               else
+               {
+                   currentNode = nextNode;
+               }
+
+               return true;
            }
 
+           /// <summary>
+           /// This method iterates to the previous object in the list.
+           /// Do to the circular nature of the list, when we reach
+           /// the beginning of the list, this method iterates back to the
+           /// last element of the list.  As a result, this method
+           /// always returns true.
+           /// </summary>
+           /// <returns>True</returns>
+           public bool MovePrevious()
+           {
+               Node<T> previousNode = currentNode.Prev;
+
+               /**
+                * If we are at the beginning of the list,
+                * skip over the head and tail nodes and
+                * go straight to the last node in the list.
+                * */
+               if (previousNode.Equals(list.Head))
+               {
+                   currentNode = list.Tail.Prev;
+               }
+               else
+               {
+                   currentNode = previousNode;
+               }
+
+               return true;
+           }
+
+           /// <summary>
+           /// This method returns the currentNode to it's
+           /// initial position at the head Node.
+           /// </summary>
            public void Reset()
            {
-               throw new NotImplementedException();
+               currentNode = list.Head;
            }
        }
 }
