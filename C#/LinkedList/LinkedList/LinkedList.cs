@@ -96,7 +96,11 @@ namespace LinkedList
            return nodeToInsert;
        }
 
-
+       /// <summary>
+       /// This method returns a LinkedListEnumerater used to iterate
+       /// over instances of this LinkedList class.
+       /// </summary>
+       /// <returns>An iterator for this class.</returns>
        public IEnumerator GetEnumerator()
        {
            throw new NotImplementedException();
