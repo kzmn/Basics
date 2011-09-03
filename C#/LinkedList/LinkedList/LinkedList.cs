@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using System.Collections;
 
 namespace LinkedList
@@ -147,6 +145,34 @@ namespace LinkedList
        }
 
        /// <summary>
+       /// This method removes the given data from the list.
+       /// </summary>
+       /// <param name="dataToRemove">The data to remove from the list.</param>
+       public void Remove(T dataToRemove)
+       {
+           Node<T> nodeToRemove = FindItem(dataToRemove);
+
+           /**
+            * The FindItem method returns a reference to the Head
+            * node if it couldn't find a node containing the given
+            * data.
+            * */
+           if (nodeToRemove.Equals(Head))
+           {
+               Console.WriteLine("There is no data matching " + dataToRemove +
+                   " in the list.");
+           }
+           else
+           {
+               Node<T> nextNode = nodeToRemove.Next;
+               Node<T> previousNode = nodeToRemove.Prev;
+
+               nextNode.Prev = previousNode;
+               previousNode.Next = nextNode;
+           }
+       }
+
+       /// <summary>
        /// This method returns a LinkedListEnumerater used to iterate
        /// over instances of this LinkedList class.
        /// </summary>
@@ -217,7 +243,7 @@ namespace LinkedList
            internal Node<T> currentNode;
            private LinkedList<T> list;
 
-           public LinkedListEnumerator(LinkedList newList)
+           public LinkedListEnumerator(LinkedList<T> newList)
            {
                list = newList;
            }
@@ -299,6 +325,21 @@ namespace LinkedList
                }
 
                return true;
+           }
+
+           /// <summary>
+           /// This method removes the current item from the list.
+           /// The previous item becomes the new current item.
+           /// </summary>
+           public void RemoveCurrent()
+           {
+               Node<T> nextNode = currentNode.Next;
+               Node<T> previousNode = currentNode.Prev;
+
+               nextNode.Prev = previousNode;
+               previousNode.Next = nextNode;
+
+               currentNode = previousNode;
            }
 
            /// <summary>
