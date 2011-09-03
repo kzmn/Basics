@@ -97,13 +97,63 @@ namespace LinkedList
        }
 
        /// <summary>
+       /// This method searches the list for a node containing the given data.
+       /// The first such node found will be returned.  If no node with a 
+       /// matching Data property is found, then this method will return
+       /// a reference to the Head node.
+       /// </summary>
+       /// <param name="dataToFind">The data to find in the list.</param>
+       /// <returns>A node containing the requested data or the Head node.</returns>
+       public Node<T> FindItem(T dataToFind)
+       {
+           IEnumerator temp = GetEnumerator();
+           LinkedListEnumerator<T> itr = (LinkedListEnumerator<T>)temp;
+
+           /**
+            * Iterate throught he list while searching for a matching node.
+            * Be careful to only go through the list one time and avoid
+            * an infinite loop.
+            * */
+           while (itr.currentNode.Equals(Tail) == false)
+           {
+               itr.MoveNext();
+               if (itr.Current.Equals(dataToFind))
+               {
+                   return itr.currentNode;
+               }
+           }
+
+           return Head;
+       }
+
+       /// <summary>
+       /// This method returns true if the given data is in the list
+       /// and false if the data is not in the list.
+       /// </summary>
+       /// <param name="dataToFind">The data to check for.</param>
+       /// <returns>True if the data is in the list, false otherwise.</returns>
+       public Boolean Contains(T dataToFind)
+       {
+           /**
+            * The FindItem() method returns a reference to the 
+            * Head node if it doesn't find a node with the matching
+            * Data.
+            * */
+           if (FindItem(dataToFind).Equals(Head))
+           {
+               return false;
+           }
+           return true;
+       }
+
+       /// <summary>
        /// This method returns a LinkedListEnumerater used to iterate
        /// over instances of this LinkedList class.
        /// </summary>
        /// <returns>An iterator for this class.</returns>
        public IEnumerator GetEnumerator()
        {
-           throw new NotImplementedException();
+           return new LinkedListEnumerator<T>(this);
        }
     }
 
@@ -164,8 +214,13 @@ namespace LinkedList
         /// <typeparam name="T">Generic type T.</typeparam>
        class LinkedListEnumerator<T>:IEnumerator
        {
-           private Node<T> currentNode;
+           internal Node<T> currentNode;
            private LinkedList<T> list;
+
+           public LinkedListEnumerator(LinkedList newList)
+           {
+               list = newList;
+           }
 
            /// <summary>
            /// The Current property is simply the Data property of the
