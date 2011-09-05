@@ -145,7 +145,7 @@ namespace LinkedList
        }
 
        /// <summary>
-       /// This method removes the given data from the list.
+       /// This method removes the first instance of the given data from the list.
        /// </summary>
        /// <param name="dataToRemove">The data to remove from the list.</param>
        public void Remove(T dataToRemove)
@@ -172,6 +172,38 @@ namespace LinkedList
            }
        }
 
+       /// <summary>
+       /// This method removes all nodes from the list that have a Data
+       /// property matching the provided data.  This method then returns
+       /// the number of nodes that it has removed.
+       /// </summary>
+       /// <param name="dataToRemove"></param>
+       /// <returns></returns>
+       public int RemoveAllInstancesOf(T dataToRemove)
+       {
+           IEnumerator temp = GetEnumerator();
+           LinkedListEnumerator<T> itr = (LinkedListEnumerator<T>)temp;
+           int count = 0;
+
+           /**
+            * Iterate throught he list while searching for matching data.
+            * Be careful to only go through the list one time and avoid
+            * an infinite loop.
+            * */
+           while (itr.currentNode.Equals(Tail) == false)
+           {
+               itr.MoveNext();
+
+               if(itr.Current.Equals(dataToRemove))
+               {
+                   itr.RemoveCurrent();
+                   count++;
+               }
+           }
+
+           return count;
+       }
+           
        /// <summary>
        /// This method returns a LinkedListEnumerater used to iterate
        /// over instances of this LinkedList class.
