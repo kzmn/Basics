@@ -1,1 +1,0 @@
-C:\Users\Richard\Projects\Basics\C#\LinkedList\LinkedList\obj\x86\Debug\ResolveAssemblyReference.cache
