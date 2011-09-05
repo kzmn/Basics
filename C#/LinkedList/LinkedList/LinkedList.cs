@@ -243,11 +243,6 @@ namespace LinkedList
            internal Node<T> currentNode;
            private LinkedList<T> list;
 
-           public LinkedListEnumerator(LinkedList<T> newList)
-           {
-               list = newList;
-           }
-
            /// <summary>
            /// The Current property is simply the Data property of the
            /// current Node.
