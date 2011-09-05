@@ -203,6 +203,24 @@ namespace LinkedList
 
            return count;
        }
+
+       /// <summary>
+       /// This method empties the list by re-setting the Tail node as the
+       /// Head Node's Next and the Head Node as the Tail node's Prev.
+       /// Garbage collection should then delete all other nodes as there
+       /// is no longer any references to them.
+       /// 
+       /// ***Warning***
+       /// If you have an IEnumerator for this list when you call this method
+       /// be sure to call the Reset() method on the Enumerator so you
+       /// aren't referencing dead nodes.
+       /// ***Warning***
+       /// </summary>
+       public void MakeEmpty()
+       {
+           Head.Next = Tail;
+           Tail.Prev = Head;
+       }
            
        /// <summary>
        /// This method returns a LinkedListEnumerater used to iterate
