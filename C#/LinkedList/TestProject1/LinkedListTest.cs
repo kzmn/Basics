@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LinkedList;
+using System.Collections;
 
 namespace TestProject1
 {
@@ -13,10 +13,6 @@ namespace TestProject1
     [TestClass]
     public class LinkedListTest
     {
-        public LinkedListTest()
-        {
-            
-        }
 
         private TestContext testContextInstance;
 
@@ -59,11 +55,30 @@ namespace TestProject1
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestInsert()
         {
-            //
-            // TODO: Add test logic here
-            //
+            LinkedList<int> list = new LinkedList<int>();
+            Assert.IsTrue(list.IsEmpty());
+            list.Insert(1);
+            Assert.IsFalse(list.IsEmpty());
+            // Test Insert() method.
+            list.Insert(2);
+            list.Insert(3);
+            list.Insert(4);
+            list.Insert(5);
+
+            // Test InsertFirst() method.
+            list.InsertFirst(6);
+            list.InsertFirst(7);
+            list.InsertFirst(8);
+            list.InsertFirst(9);
+            list.InsertFirst(10);
+
+            IEnumerator itr = list.GetEnumerator();
+            LinkedListEnumerator<int> listItr = (LinkedListEnumerator<int>)itr;
+
+            // Confirm that all nodes were added to the list and added in the correct order.
+            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString())
         }
     }
 }

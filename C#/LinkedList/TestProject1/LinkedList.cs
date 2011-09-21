@@ -12,7 +12,7 @@ namespace LinkedList
    /// Date: 9/2/2011
    /// </summary>
    /// <typeparam name="T">Generic Type T</typeparam>
-   public class LinkedList<T> : IEnumerable
+    public class LinkedList<T> : IEnumerable
     {
         internal Node<T> Head { get; private set; }
         internal Node<T> Tail { get; private set; }
@@ -93,6 +93,7 @@ namespace LinkedList
 
             return nodeToInsert;
         }
+
 
         /// <summary>
         /// This method searches the list for a node containing the given data.
@@ -231,6 +232,25 @@ namespace LinkedList
         {
             return new LinkedListEnumerator<T>(this);
         }
+
+        public override string ToString()
+        {
+            IEnumerator temp = GetEnumerator();
+            LinkedListEnumerator<T> itr = (LinkedListEnumerator<T>)temp;
+            string stringToReturn = "";
+
+            /**
+             * Iterate throught he list while searching for matching data.
+             * Be careful to only go through the list one time and avoid
+             * an infinite loop.
+             * */
+            while (itr.currentNode.Equals(Tail) == false)
+            {
+                itr.MoveNext();
+                stringToReturn = stringToReturn + itr.Current.ToString() + " ";
+            }
+
+    }
 
 
         /// <summary>
@@ -396,5 +416,4 @@ namespace LinkedList
                 currentNode = list.Head;
             }
         }
-    }
 }
