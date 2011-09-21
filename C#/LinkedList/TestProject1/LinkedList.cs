@@ -250,6 +250,9 @@ namespace LinkedList
                 stringToReturn = stringToReturn + itr.Current.ToString() + " ";
             }
 
+            return stringToReturn;
+        }
+
     }
 
 

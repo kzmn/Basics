@@ -78,7 +78,7 @@ namespace TestProject1
             LinkedListEnumerator<int> listItr = (LinkedListEnumerator<int>)itr;
 
             // Confirm that all nodes were added to the list and added in the correct order.
-            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString())
+            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString());
         }
     }
 }
