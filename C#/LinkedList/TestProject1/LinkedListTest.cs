@@ -102,6 +102,23 @@ namespace TestProject1
             itr.MovePrevious();
             Assert.IsTrue(itr.Current.Equals(1));
 
+            // TestinsertAfterCurrent
+            itr.InsertAfterCurrent(7);
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(7));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(2));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(7));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(1));
+
+            // Test RemoveCurrent.
+            itr.RemoveCurrent();
+            Assert.IsTrue(itr.Current.Equals(5));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(7));
+
         }
 
     }

@@ -83,6 +83,7 @@ namespace LinkedList
         /// <param name="dataToInsert"></param>
         /// <param name="prev"></param>
         /// <returns></returns>
+        /**
         public Node<T> InsertAfter(T dataToInsert, Node<T> prev)
         {
             Node<T> next = prev.Next;
@@ -93,6 +94,8 @@ namespace LinkedList
 
             return nodeToInsert;
         }
+        
+         * */
 
 
         /// <summary>
@@ -262,7 +265,7 @@ namespace LinkedList
         /// predecessor and successor in the list.
         /// </summary>
         /// <typeparam name="T">The generic type T</typeparam>
-        public class Node<T>
+        internal class Node<T>
         {
 
             public T Data { get; set; }            //The data stored by the Node.
@@ -407,7 +410,7 @@ namespace LinkedList
                 nextNode.Prev = previousNode;
                 previousNode.Next = nextNode;
 
-                currentNode = previousNode;
+                currentNode = this.MovePrevious;
             }
 
             /// <summary>
@@ -421,7 +424,6 @@ namespace LinkedList
                 Node<T> nodeToInsert = new Node<T>(dataToInsert, currentNode, nextNode);
                 currentNode.Next = nodeToInsert;
                 nextNode.Prev = nodeToInsert;
-
             }
 
             /// <summary>
