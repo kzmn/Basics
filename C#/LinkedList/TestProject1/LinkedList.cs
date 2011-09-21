@@ -411,6 +411,20 @@ namespace LinkedList
             }
 
             /// <summary>
+            /// This method inserts a new node with the given data
+            /// after the current node.
+            /// </summary>
+            /// <param name="dataToInsert"></param>
+            public void InsertAfterCurrent(T dataToInsert)
+            {
+                Node<T> nextNode = currentNode.Next;
+                Node<T> nodeToInsert = new Node<T>(dataToInsert, currentNode, nextNode);
+                currentNode.Next = nodeToInsert;
+                nextNode.Prev = nodeToInsert;
+
+            }
+
+            /// <summary>
             /// This method returns the currentNode to it's
             /// initial position at the head Node.
             /// </summary>

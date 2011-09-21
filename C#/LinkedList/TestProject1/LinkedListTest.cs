@@ -32,28 +32,6 @@ namespace TestProject1
             }
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [TestMethod]
         public void TestInsert()
         {
@@ -78,7 +56,53 @@ namespace TestProject1
             LinkedListEnumerator<int> listItr = (LinkedListEnumerator<int>)itr;
 
             // Confirm that all nodes were added to the list and added in the correct order.
-            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString());
+            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString()));
         }
+
+        [TestMethod]
+        public void TestEnumerator()
+        {
+            LinkedList<int> list = new LinkedList<int>();
+            list.Insert(1);
+            list.Insert(2);
+            list.Insert(3);
+            list.Insert(4);
+            list.Insert(5);
+
+            IEnumerator temp = list.GetEnumerator();
+            LinkedListEnumerator<int> itr = (LinkedListEnumerator<int>)temp;
+
+            Assert.IsNull(itr.Current);
+            Assert.IsTrue(itr.currentNode.Equals(list.Head));
+
+            // Perform a full forward iteration, circling back to the first
+            // element in the list.
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(1));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(2));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(3));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(4));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(5));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(1));
+
+            // Now a backwards iteration.
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(5));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(4));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(3));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(2));
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(1));
+
+        }
+
     }
 }
