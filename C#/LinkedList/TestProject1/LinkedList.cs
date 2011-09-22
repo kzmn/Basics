@@ -410,7 +410,9 @@ namespace LinkedList
                 nextNode.Prev = previousNode;
                 previousNode.Next = nextNode;
 
-                currentNode = this.MovePrevious;
+                MovePrevious();
+                
+                
             }
 
             /// <summary>

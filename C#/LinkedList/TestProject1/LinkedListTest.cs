@@ -52,9 +52,6 @@ namespace TestProject1
             list.InsertFirst(9);
             list.InsertFirst(10);
 
-            IEnumerator itr = list.GetEnumerator();
-            LinkedListEnumerator<int> listItr = (LinkedListEnumerator<int>)itr;
-
             // Confirm that all nodes were added to the list and added in the correct order.
             Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString()));
         }
@@ -119,7 +116,73 @@ namespace TestProject1
             itr.MoveNext();
             Assert.IsTrue(itr.Current.Equals(7));
 
+            // Test Reset method.
+            itr.Reset();
+            Assert.IsTrue(itr.currentNode.Equals(list.Head));
+
         }
 
+        [TestMethod]
+        public void TestFind()
+        {
+            LinkedList<int> list = new LinkedList<int>();
+            list.Insert(1);
+            list.Insert(2);
+            list.Insert(3);
+            list.Insert(4);
+            list.Insert(5);
+            list.Insert(4);
+
+            // Test that Contains returns true for
+            // all elements in the list.
+            Assert.IsTrue(list.Contains(1));
+            Assert.IsTrue(list.Contains(2));
+            Assert.IsTrue(list.Contains(3));
+            Assert.IsTrue(list.Contains(4));
+            Assert.IsTrue(list.Contains(5));
+
+            // Test that Contains() returns false for 
+            // an element not in the list.
+            Assert.IsFalse(list.Contains(7));
+
+            // Test that FindItem returns the first
+            // matching node in the list.
+            // The no matching nodes condition for
+            // this method is tested by the contains
+            // tests above.
+            Node<int> node4 = list.FindItem(4);
+            Assert.IsTrue(node4.Data.Equals(4));
+            Assert.IsTrue(node4.Next.Data.Equals(5));
+            Assert.IsTrue(node4.Prev.Data.Equals(3));
+        }
+
+        [TestMethod]
+        public void TestRemove()
+        {
+            LinkedList<int> list = new LinkedList<int>();
+            list.Insert(1);
+            list.Insert(2);
+            list.Insert(3);
+            list.Insert(4);
+            list.Insert(5);
+            list.Insert(4);
+
+            list.Remove(0);
+            Assert.IsTrue("1 2 3 4 5 4".Equals(list.ToString()));
+
+            list.Remove(2);
+            Assert.IsTrue("1 3 4 5 4".Equals(list.ToString()));
+
+            int noInstances = list.RemoveAllInstancesOf(2);
+            int oneInstance = list.RemoveAllInstancesOf(3);
+            int twoInstances = list.RemoveAllInstancesOf(4);
+
+            Assert.IsTrue(noInstances.Equals(0));
+            Assert.IsTrue(oneInstance.Equals(1));
+            Assert.IsTrue(twoInstances.Equals(2));
+
+            Assert.IsTrue("1 5".Equals(list.ToString()));
+
+        }
     }
 }
