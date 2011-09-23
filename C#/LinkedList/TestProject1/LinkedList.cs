@@ -47,7 +47,7 @@ namespace LinkedList
         /// </summary>
         /// <param name="nodeToInsert">The data to add to the list.</param>
         /// <returns>The newly created node containing the data.</returns>
-        public Node<T> Insert(T dataToInsert)
+        public void Insert(T dataToInsert)
         {
 
             Node<T> prev = Tail.Prev;
@@ -56,7 +56,6 @@ namespace LinkedList
             prev.Next = nodeToInsert;
             Tail.Prev = nodeToInsert;
 
-            return nodeToInsert;
         }
 
         /// <summary>
@@ -64,16 +63,13 @@ namespace LinkedList
         /// front of the list.
         /// </summary>
         /// <param name="dataToInsert">The data to insert into the list.</param>
-        /// <returns></returns>
-        public Node<T> InsertFirst(T dataToInsert)
+        public void InsertFirst(T dataToInsert)
         {
             Node<T> next = Head.Next;
             Node<T> nodeToInsert = new Node<T>(dataToInsert, Head, next);
 
             Head.Next = nodeToInsert;
             next.Prev = nodeToInsert;
-
-            return nodeToInsert;
         }
 
         /// <summary>
@@ -106,7 +102,7 @@ namespace LinkedList
         /// </summary>
         /// <param name="dataToFind">The data to find in the list.</param>
         /// <returns>A node containing the requested data or the Head node.</returns>
-        public Node<T> FindItem(T dataToFind)
+        internal Node<T> FindItem(T dataToFind)
         {
             IEnumerator temp = GetEnumerator();
             LinkedListEnumerator<T> itr = (LinkedListEnumerator<T>)temp;
@@ -116,7 +112,7 @@ namespace LinkedList
              * Be careful to only go through the list one time and avoid
              * an infinite loop.
              * */
-            while (itr.currentNode.Equals(Tail) == false)
+            while (itr.currentNode.Next.Equals(Tail) == false)
             {
                 itr.MoveNext();
                 if (itr.Current.Equals(dataToFind))
@@ -194,7 +190,7 @@ namespace LinkedList
              * Be careful to only go through the list one time and avoid
              * an infinite loop.
              * */
-            while (itr.currentNode.Equals(Tail) == false)
+            while (itr.currentNode.Next.Equals(Tail) == false)
             {
                 itr.MoveNext();
 
@@ -247,7 +243,7 @@ namespace LinkedList
              * Be careful to only go through the list one time and avoid
              * an infinite loop.
              * */
-            while (itr.currentNode.Equals(Tail) == false)
+            while (itr.currentNode.Next.Equals(Tail) == false)
             {
                 itr.MoveNext();
                 stringToReturn = stringToReturn + itr.Current.ToString() + " ";
@@ -397,6 +393,20 @@ namespace LinkedList
 
                 return true;
             }
+
+            /// <summary>
+            /// This method sets the current node to the first node 
+            /// found with the LinkedList.FindItem() method for the
+            /// parameterized data.  If no node with matching data
+            /// can be found, then the head node is set as the
+            /// new current node.
+            /// </summary>
+            /// <param name="itemToFind"></param>
+            public void MoveToFirstInstanceOf(T itemToFind)
+            {
+                currentNode = list.FindItem(itemToFind);
+            }
+                
 
             /// <summary>
             /// This method removes the current item from the list.

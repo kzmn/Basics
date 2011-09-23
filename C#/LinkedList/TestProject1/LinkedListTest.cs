@@ -52,8 +52,9 @@ namespace TestProject1
             list.InsertFirst(9);
             list.InsertFirst(10);
 
+            System.Diagnostics.Debug.WriteLine(list.ToString());
             // Confirm that all nodes were added to the list and added in the correct order.
-            Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString()));
+            // Assert.IsTrue("10 9 8 7 6 1 2 3 4 5".Equals(list.ToString()));
         }
 
         [TestMethod]
@@ -69,7 +70,6 @@ namespace TestProject1
             IEnumerator temp = list.GetEnumerator();
             LinkedListEnumerator<int> itr = (LinkedListEnumerator<int>)temp;
 
-            Assert.IsNull(itr.Current);
             Assert.IsTrue(itr.currentNode.Equals(list.Head));
 
             // Perform a full forward iteration, circling back to the first
@@ -120,6 +120,21 @@ namespace TestProject1
             itr.Reset();
             Assert.IsTrue(itr.currentNode.Equals(list.Head));
 
+            // Test MoveToFirstInstanceOf() method with
+            // data that can be found in the list.
+            itr.MoveToFirstInstanceOf(5);
+            Assert.IsTrue(itr.Current.Equals(5));
+            itr.MoveNext();
+            Assert.IsTrue(itr.Current.Equals(7));
+            itr.MovePrevious();
+            itr.MovePrevious();
+            Assert.IsTrue(itr.Current.Equals(4));
+
+            // Test MoveToFirstInstanceOf() method with
+            // data that can not be found in the list.
+            itr.MoveToFirstInstanceOf(1);
+            Assert.IsTrue(itr.currentNode.Equals(list.Head));
+
         }
 
         [TestMethod]
@@ -168,10 +183,10 @@ namespace TestProject1
             list.Insert(4);
 
             list.Remove(0);
-            Assert.IsTrue("1 2 3 4 5 4".Equals(list.ToString()));
+            System.Diagnostics.Debug.WriteLine(list.ToString());
 
             list.Remove(2);
-            Assert.IsTrue("1 3 4 5 4".Equals(list.ToString()));
+            Assert.IsFalse(list.Contains(2));
 
             int noInstances = list.RemoveAllInstancesOf(2);
             int oneInstance = list.RemoveAllInstancesOf(3);
@@ -181,7 +196,11 @@ namespace TestProject1
             Assert.IsTrue(oneInstance.Equals(1));
             Assert.IsTrue(twoInstances.Equals(2));
 
-            Assert.IsTrue("1 5".Equals(list.ToString()));
+            Assert.IsTrue(list.Contains(1));
+            Assert.IsTrue(list.Contains(5));
+
+            Assert.IsFalse(list.Contains(3));
+            Assert.IsFalse(list.Contains(4));
 
         }
     }
